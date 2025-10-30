@@ -1,0 +1,215 @@
+/* ===== HERO BANNER STATIC ===== */
+.hero-banner-container {
+    position: relative;
+    width: 100%;
+    z-index: 9;
+}
+
+.hero-banner-slider {
+    position: relative;
+}
+
+.banner-slide {
+    position: relative;
+    height: 40vh;
+    min-height: 300px;
+    max-height: 500px;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+}
+
+.slide-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 0, 0, 0.7) 0%, 
+        rgba(0, 0, 0, 0.4) 50%, 
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-content {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    max-width: 800px;
+    animation: slideUp 1.2s ease-out;
+}
+
+.slide-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+.slide-subtitle {
+    font-size: 1rem;
+}
+
+/* ===== SEARCH FORM OVERLAY ===== */
+.search-overlay-container {
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 90%;
+    max-width: 900px;
+}
+
+/* ===== SEARCH FORM FLOATING STYLES ===== */
+.search-form-floating {
+    animation: slideUp 0.8s ease-out;
+}
+
+.search-form-floating .card {
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.search-form-floating .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .banner-slide {
+        height: 60vh;
+        min-height: 400px;
+    }
+    
+    .slide-title {
+        font-size: 2.5rem;
+    }
+    
+    .slide-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .slide-content {
+        padding: 1rem;
+    }
+    
+    .hero-banner-slider .slick-prev {
+        left: 15px;
+    }
+    
+    .hero-banner-slider .slick-next {
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .slide-title {
+        font-size: 2rem;
+    }
+    
+    .slide-subtitle {
+        font-size: 1rem;
+    }
+    
+    .search-overlay-container {
+        width: 95%;
+        bottom: -60px;
+    }
+}
+
+/* ===== SEARCH FORM FLOATING STYLES ===== */
+.search-form-floating {
+    animation: slideUp 0.8s ease-out;
+}
+
+.search-form-floating .card {
+    transition: all 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.search-form-floating .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== MAIN CONTENT SPACING ===== */
+#planningSection {
+    margin-top: 0;
+    padding: 0;
+    z-index: 1;
+    position: relative;
+    min-height: 70vh;
+    width: 100%;
+}
+
+/* ===== BRAZIL MAP SECTION ===== */
+.map-section-container {
+    margin-top: 2rem;
+}
+
+#brazilMap {
+    filter: grayscale(30%) contrast(1.1) brightness(0.95);
+    transition: filter 0.3s ease;
+    height: 80vh;
+}
+
+#brazilMap:hover {
+    filter: grayscale(0%) contrast(1.2) brightness(1);
+}
+
+/* Leaflet map minimalist style overrides */
+.leaflet-container {
+    background: #f8f9fa !important;
+}
+
+.leaflet-tile {
+    filter: grayscale(40%) contrast(1.2) brightness(1.1) !important;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+    .search-overlay-container {
+        width: 95%;
+        bottom: -100px;
+    }
+    
+    #planningSection {
+        margin-top: 140px;
+    }
+    
+    .search-form-floating .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/* ===== MAIN CONTENT SPACING ===== */
+#planningSection {
+    margin-top: 0;
+    padding: 0;
+    z-index: 1;
+    position: relative;
+    min-height: 70vh;
+    width: 100%;
+}

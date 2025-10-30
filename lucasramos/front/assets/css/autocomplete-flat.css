@@ -1,0 +1,70 @@
+/* ===== AUTOCOMPLETE FLAT DESIGN ===== */
+.sugestoes-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-top: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+}
+
+.sugestao-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.15s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sugestao-item:hover {
+    background-color: #f9fafb;
+}
+
+.sugestao-item:last-child {
+    border-bottom: none;
+}
+
+.cidade-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.cidade-nome {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.95rem;
+}
+
+.cidade-uf {
+    font-size: 0.8rem;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.input-container {
+    position: relative;
+}
+
+/* Flat design overrides */
+.sugestoes-dropdown {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px !important;
+}
+
+.sugestao-item:hover {
+    background-color: #f3f4f6 !important;
+    transform: none !important;
+}
