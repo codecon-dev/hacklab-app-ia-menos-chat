@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turismo Inteligente - Rota com IA</title>
+
+    <!-- DaisyUI + Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/banner.css">
+    <link rel="stylesheet" href="assets/css/flat-design-clean.css">
+    <link rel="stylesheet" href="assets/css/autocomplete-flat.css">
+</head>
+
+<body class="bg-base-100">
+    <!-- Navbar -->
+    <div class="navbar bg-white text-gray-800 border-b border-gray-200" id="mainNavbar">
+        <div class="navbar-start">
+            <a href="index.html" class="text-xl font-semibold text-gray-900">
+                <i class="fas fa-map-marked-alt mr-2 text-blue-500"></i>
+                Turismo Inteligente
+            </a>
+        </div>
+        <div class="navbar-end gap-2">
+            <button id="loginButton" class="btn btn-outline btn-sm" onclick="window.location.href='login.html'"
+                style="display: none;">
+                <i class="fas fa-sign-in-alt mr-1"></i>
+                Entrar
+            </button>
+
+            <!-- Botão de Logout (visível quando logado) -->
+            <button id="logoutButton" class="btn btn-outline btn-sm" onclick="app.logout()" style="display: none;">
+                <i class="fas fa-sign-out-alt mr-1"></i>
+                Sair
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Banner Carousel -->
+    <div class="hero-banner-container">
+        <div class="hero-banner-slider">
+            <!-- Slide Único - CodeCon -->
+            <div class="banner-slide">
+                <div class="slide-image" style="background-image: url('assets/image/codecon.png')">
+                </div>
+            </div>
+        </div>
+        <div class="search-overlay-container">
+            <div class="search-form-floating">
+                <div class="card bg-white border border-gray-200">
+                    <div class="card-body p-6">
+                        <h2 class="text-xl font-semibold mb-4 text-center text-gray-900">
+                            Planeje sua Rota com IA
+                        </h2>
+
+                        <form id="routeForm" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- Cidade Origem -->
+                                <div class="form-control">
+                                    <label class="text-sm font-medium text-gray-700 mb-1">Origem</label>
+                                    <div class="input-container">
+                                        <input type="text" id="origemInput" placeholder="Cidade de origem..."
+                                            class="input input-bordered w-full" autocomplete="off" required />
+                                        <div id="origemSugestoes" class="sugestoes-dropdown"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Cidade Destino -->
+                                <div class="form-control">
+                                    <label class="text-sm font-medium text-gray-700 mb-1">Destino</label>
+                                    <div class="input-container">
+                                        <input type="text" id="destinoInput" placeholder="Cidade de destino..."
+                                            class="input input-bordered w-full" autocomplete="off" required />
+                                        <div id="destinoSugestoes" class="sugestoes-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Botões -->
+                            <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6">
+                                <button type="button" id="btnLimpar" class="btn btn-outline">
+                                    Limpar
+                                </button>
+                                <button type="submit" id="buscarRotaBtn" class="btn btn-primary">
+                                    Planejar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="planningSection" class="relative">
+        <div class="map-container">
+            <div id="brazilMap" class="w-full h-96 rounded border border-gray-300"></div>
+        </div>
+
+        <!-- Collapsible Route Sidebar Overlay -->
+
+
+        <!-- Sidebar Toggle Button (when collapsed) -->
+        <button id="sidebarOpenBtn" class="sidebar-open-btn hidden" onclick="app.toggleRouteSidebar()">
+            <i class="fas fa-map-marked-alt"></i>
+            <span>Pontos</span>
+        </button>
+
+        <!-- Loading -->
+        <div id="loading" class="loading-container hidden">
+            <div class="card bg-white border border-gray-200">
+                <div class="card-body text-center py-12">
+                    <span class="loading loading-spinner loading-lg text-blue-600"></span>
+                    <p class="mt-4 text-lg text-gray-900">Criando sua rota personalizada com IA...</p>
+                    <p class="text-sm text-gray-600">Analisando destinos e criando o melhor roteiro para você</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultSection" class="hidden">
+            <!-- Action Buttons -->
+            <div class="flex justify-end mb-4 gap-3">
+                <button id="btnSalvarRoteiro" class="btn btn-success btn-sm" onclick="app.mostrarModalSalvarRoteiro()">
+                    Salvar Roteiro
+                </button>
+                <button id="btnCompartilhar" class="btn btn-outline btn-sm">
+                    Compartilhar
+                </button>
+            </div>
+
+            <!-- Seção para Roteiros Salvos -->
+            <div id="roteirosSalvosSection" class="mt-8">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">
+                            <i class="fas fa-bookmark text-yellow-500"></i>
+                            Seus Roteiros Salvos
+                            <button class="btn btn-ghost btn-sm ml-auto" onclick="app.carregarRoteirosSalvos()">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                        </h3>
+                        <div id="listaRoteirosSalvos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Roteiros salvos serão carregados aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para Salvar Roteiro -->
+        <input type="checkbox" id="modalSalvarRoteiro" class="modal-toggle">
+        <div class="modal">
+            <div class="modal-box">
+                <h3 class="font-bold text-lg mb-4">
+                    <i class="fas fa-save text-success mr-2"></i>
+                    Salvar Roteiro
+                </h3>
+
+                <div class="form-control mb-4">
+                    <label class="label">
+                        <span class="label-text font-medium">Título do Roteiro</span>
+                    </label>
+                    <input type="text" id="tituloRoteiro" placeholder="Ex: Viagem para o Rio de Janeiro"
+                        class="input input-bordered w-full" maxlength="255" required />
+                </div>
+
+                <div class="form-control mb-6">
+                    <label class="label">
+                        <span class="label-text">Resumo da Rota</span>
+                    </label>
+                    <div class="bg-base-200 p-3 rounded-lg text-sm">
+                        <div><strong>Origem:</strong> <span id="resumoOrigem">-</span></div>
+                        <div><strong>Destino:</strong> <span id="resumoDestino">-</span></div>
+                        <div><strong>Preferências:</strong> <span id="resumoPreferencias">-</span></div>
+                    </div>
+                </div>
+
+                <div class="modal-action">
+                    <label for="modalSalvarRoteiro" class="btn btn-ghost">Cancelar</label>
+                    <button class="btn btn-success" onclick="app.salvarRoteiro()">
+                        <i class="fas fa-save mr-2"></i>
+                        Salvar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Points List -->
+    <div id="pontosList" class="overflow-y-auto h-full space-y-3">
+        <!-- Points will be populated here -->
+    </div>
+
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">
+                <i class="fas fa-robot text-primary"></i>
+                Consultando Gemini AI...
+            </h3>
+            <div class="flex items-center space-x-4">
+                <span class="loading loading-spinner loading-lg text-primary"></span>
+                <div>
+                    <p id="loadingText">Analisando sua solicitação...</p>
+                    <div class="text-sm text-base-content/60" id="loadingSubtext">
+                        Isso pode levar alguns segundos...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-sm btn-outline" onclick="cancelarBusca()">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="errorAlert" class="alert alert-error hidden fixed top-4 right-4 w-auto z-50">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorMessage"></span>
+        <button class="btn btn-sm btn-ghost" onclick="fecharErro()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Success Alert -->
+    <div id="successAlert" class="alert alert-success hidden fixed top-4 right-4 w-auto z-50">
+        <i class="fas fa-check-circle"></i>
+        <span id="successMessage"></span>
+        <button class="btn btn-sm btn-ghost" onclick="fecharSucesso()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Loading Overlay com CodeCon PRO -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner-container">
+                <div class="loading-spinner"></div>
+                <h2 class="loading-title">Pensando...</h2>
+            </div>
+            <div class="loading-promo">
+                <p class="promo-text">Assine a CodeCon PRO</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="routeSidebar" class="route-sidebar hidden">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">
+                <i class="fas fa-map-marked-alt"></i> Pontos Turísticos
+            </h3>
+            <button id="sidebarToggle" class="sidebar-toggle-btn" onclick="app.toggleRouteSidebar()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <!-- Route Info Header (movido do resultSection) -->
+            <div id="routeHeader" class="route-header-sidebar">
+                <div class="route-header-content">
+                    <div>
+                        <h2 class="route-title-sidebar" id="routeTitle">Sua Rota Turística</h2>
+                        <p class="route-subtitle-sidebar" id="routeSubtitle">Descubra pontos incríveis pelo caminho
+                        </p>
+                    </div>
+                    <div class="route-details-sidebar">
+                        <span id="routeDistance"><i class="fas fa-route"></i> Calculando...</span>
+                        <span id="routeTime"><i class="fas fa-clock"></i> Calculando...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons (movido do resultSection) -->
+            <div class="sidebar-actions">
+                <button id="btnSalvarRoteiro" class="btn btn-success btn-sm" onclick="app.mostrarModalSalvarRoteiro()">
+                    <i class="fas fa-save"></i> Salvar
+                </button>
+                <button id="btnCompartilhar" class="btn btn-outline btn-sm">
+                    <i class="fas fa-share"></i> Compartilhar
+                </button>
+            </div>
+
+            <!-- Points List -->
+            <div id="pointsList" class="points-list">
+                <div class="no-points-message">
+                    <p>Pesquise uma rota para ver os pontos turísticos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

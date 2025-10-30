@@ -1,0 +1,263 @@
+/* ===== FLAT DESIGN OVERRIDES ===== */
+
+/* Remove shadows and gradients for flat design */
+.card {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    background: #ffffff !important;
+}
+
+.navbar {
+ /* Flat design for specific app components */
+.sugestoes-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    z-index: 1001 !important;
+}
+
+.sugestoes-dropdown .sugestao-item:hover {
+    background-color: #f3f4f6 !important;
+    transform: none !important;
+}
+
+/* Navbar - flat design */
+.navbar {
+    box-shadow: none !important;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+/* Flat buttons */
+.btn {
+    box-shadow: none !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-primary {
+    background: #3b82f6 !important;
+    border: 1px solid #3b82f6 !important;
+    color: white !important;
+}
+
+.btn-primary:hover {
+    background: #2563eb !important;
+    border: 1px solid #2563eb !important;
+}
+
+.btn-secondary {
+    background: #6b7280 !important;
+    border: 1px solid #6b7280 !important;
+    color: white !important;
+}
+
+.btn-outline {
+    background: transparent !important;
+    border: 1px solid #d1d5db !important;
+    color: #374151 !important;
+}
+
+.btn-outline:hover {
+    background: #f9fafb !important;
+    border: 1px solid #9ca3af !important;
+}
+
+/* Flat inputs */
+.input, .textarea {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+}
+
+.input:focus, .textarea:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: none !important;
+    outline: 2px solid transparent !important;
+}
+
+/* Flat search form */
+.search-form-floating .card {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    background: rgba(255, 255, 255, 1) !important;
+    backdrop-filter: none !important;
+}
+
+.search-form-floating .card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: #d1d5db !important;
+}
+
+/* Flat banner design */
+.slide-overlay {
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 0, 0, 0.5) 0%, 
+        rgba(0, 0, 0, 0.3) 50%, 
+        rgba(0, 0, 0, 0.4) 100%
+    ) !important;
+}
+
+.slide-title {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    filter: none !important;
+    color: white !important;
+}
+
+.slide-subtitle {
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Flat map section */
+#brazilMap {
+    filter: none !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+#brazilMap:hover {
+    filter: none !important;
+}
+
+/* Remove leaflet shadows */
+.leaflet-control {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+}
+
+.leaflet-popup-content-wrapper {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+}
+
+/* Flat loading state */
+.loading-container .card {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+}
+
+/* Flat slick carousel controls */
+.hero-banner-slider .slick-dots {
+    bottom: 20px !important;
+}
+
+.hero-banner-slider .slick-dots li button:before {
+    font-size: 12px !important;
+    color: white !important;
+    opacity: 0.7 !important;
+}
+
+.hero-banner-slider .slick-dots li.slick-active button:before {
+    opacity: 1 !important;
+    color: #3b82f6 !important;
+}
+
+.hero-banner-slider .slick-prev,
+.hero-banner-slider .slick-next {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.hero-banner-slider .slick-prev:before,
+.hero-banner-slider .slick-next:before {
+    font-size: 24px !important;
+    color: white !important;
+    opacity: 0.8 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+.hero-banner-slider .slick-prev:hover:before,
+.hero-banner-slider .slick-next:hover:before {
+    opacity: 1 !important;
+    color: #3b82f6 !important;
+}
+
+/* Flat results section */
+.results-section .card {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+}
+
+/* Flat alerts and notifications */
+.alert {
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+}
+
+.alert-info {
+    background: #eff6ff !important;
+    border-color: #3b82f6 !important;
+    color: #1e40af !important;
+}
+
+/* Typography adjustments for flat design */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600 !important;
+}
+
+.card-title {
+    font-weight: 600 !important;
+    color: #111827 !important;
+}
+
+/* Flat spacing and layout */
+.container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Remove all animations for true flat design */
+* {
+    transition: all 0.2s ease !important;
+}
+
+/* Disable complex animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.search-form-floating {
+    animation: slideUp 0.5s ease-out !important;
+}
+
+/* Additional flat design components */
+.sugestoes-dropdown {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.sugestoes-dropdown .sugestao-item:hover {
+    background-color: #f3f4f6 !important;
+}
+
+/* Banner section */
+.banner-slide {
+    border-radius: 8px !important;
+}
+
+/* Map section container */
+.map-section-container .card {
+    border: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+}

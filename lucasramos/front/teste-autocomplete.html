@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Autocomplete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .test-container {
+            margin: 20px 0;
+        }
+        
+        .input-container {
+            position: relative;
+            width: 300px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .sugestoes-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .sugestao-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sugestao-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .cidade-nome {
+            font-weight: bold;
+        }
+        
+        .cidade-uf {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste do Autocomplete de Cidades</h1>
+    
+    <div class="test-container">
+        <h3>Teste da API</h3>
+        <button onclick="testarAPI()">Testar API Diretamente</button>
+        <div id="apiResult" class="test-result"></div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Campo Origem</h3>
+        <div class="input-container">
+            <input type="text" id="origemInput" placeholder="Digite uma cidade..." />
+            <div id="origemSugestoes" class="sugestoes-dropdown"></div>
+        </div>
+    </div>
+    
+    <div class="test-container">
+        <h3>Campo Destino</h3>
+        <div class="input-container">
+            <input type="text" id="destinoInput" placeholder="Digite uma cidade..." />
+            <div id="destinoSugestoes" class="sugestoes-dropdown"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Função para testar a API diretamente
+        async function testarAPI() {
+            const resultDiv = document.getElementById('apiResult');
+            resultDiv.innerHTML = 'Testando API...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/cities/search?q=rio&limit=5`);
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <strong>Status:</strong> ${response.status}<br>
+                    <strong>Response:</strong> <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>Erro:</strong> ${error.message}`;
+            }
+        }
+
+        // Função simplificada do autocomplete
+        function setupAutocomplete(inputId, suggestionsId) {
+            const input = document.getElementById(inputId);
+            const suggestions = document.getElementById(suggestionsId);
+            
+            let timeout;
+            
+            input.addEventListener('input', (e) => {
+                clearTimeout(timeout);
+                const query = e.target.value.trim();
+                
+                if (query.length < 2) {
+                    suggestions.style.display = 'none';
+                    return;
+                }
+                
+                timeout = setTimeout(() => {
+                    buscarCidades(query, suggestions, input);
+                }, 300);
+            });
+
+            input.addEventListener('blur', () => {
+                setTimeout(() => {
+                    suggestions.style.display = 'none';
+                }, 200);
+            });
+        }
+
+        async function buscarCidades(termo, suggestionsContainer, inputElement) {
+            try {
+                const url = `${API_BASE}/api/v1/cities/search?q=${encodeURIComponent(termo)}&limit=8`;
+                console.log('Buscando:', url);
+                
+                const response = await fetch(url);
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`Erro na busca: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                const cities = data.cidades || [];
+                renderSuggestions(cities, suggestionsContainer, inputElement);
+            } catch (error) {
+                console.error('Erro ao buscar cidades:', error);
+                suggestionsContainer.innerHTML = `<div class="sugestao-item">Erro: ${error.message}</div>`;
+                suggestionsContainer.style.display = 'block';
+            }
+        }
+
+        function renderSuggestions(cities, container, input) {
+            if (!cities || cities.length === 0) {
+                container.innerHTML = '<div class="sugestao-item">Nenhuma cidade encontrada</div>';
+                container.style.display = 'block';
+                return;
+            }
+
+            container.innerHTML = cities.map(city => 
+                `<div class="sugestao-item" onclick="selectCity('${city.nome}', '${city.uf}', '${input.id}', '${container.id}')">
+                    <div class="cidade-nome">${city.nome}</div>
+                    <div class="cidade-uf">${city.uf}</div>
+                </div>`
+            ).join('');
+            
+            container.style.display = 'block';
+        }
+
+        function selectCity(nome, uf, inputId, containerId) {
+            const input = document.getElementById(inputId);
+            const container = document.getElementById(containerId);
+            
+            input.value = `${nome}, ${uf}`;
+            container.style.display = 'none';
+        }
+
+        // Inicializar autocomplete
+        setupAutocomplete('origemInput', 'origemSugestoes');
+        setupAutocomplete('destinoInput', 'destinoSugestoes');
+    </script>
+</body>
+</html>

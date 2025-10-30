@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Turismo Inteligente</title>
+    
+    <!-- DaisyUI + Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+    
+    <!-- Main Container -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md">
+            
+            <!-- Logo/Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                    <i class="fas fa-map-marked-alt text-2xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800">Turismo Inteligente</h1>
+                <p class="text-gray-600 mt-2">Faça login para continuar</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="card bg-white shadow-xl">
+                <div class="card-body">
+                    
+                    <!-- Login Form -->
+                    <div id="loginForm">
+                        <h2 class="card-title justify-center mb-6">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Entrar
+                        </h2>
+                        
+                        <form id="formLogin" class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-medium">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        Email
+                                    </span>
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="loginEmail"
+                                    placeholder="seu@email.com"
+                                    class="input input-bordered input-primary w-full"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-medium">
+                                        <i class="fas fa-lock mr-2"></i>
+                                        Senha
+                                    </span>
+                                </label>
+                                <input 
+                                    type="password" 
+                                    id="loginSenha"
+                                    placeholder="sejapro"
+                                    class="input input-bordered input-primary w-full"
+                                    value="sejapro"
+                                    required
+                                />
+                                <label class="label">
+                                    <span class="label-text-alt text-info">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        A senha padrão é: <strong>sejapro</strong>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="form-control mt-6">
+                                <button type="submit" id="btnLogin" class="btn btn-primary btn-block">
+                                    <i class="fas fa-sign-in-alt mr-2"></i>
+                                    Entrar
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="divider">OU</div>
+
+                        <div class="text-center">
+                            <button id="btnMostrarCadastro" class="btn btn-ghost btn-sm">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Não tem conta? Cadastre-se
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="registerForm" class="hidden">
+                        <h2 class="card-title justify-center mb-6">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Cadastrar
+                        </h2>
+                        
+                        <form id="formCadastro" class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-medium">
+                                        <i class="fas fa-user mr-2"></i>
+                                        Nome Completo
+                                    </span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="cadastroNome"
+                                    placeholder="Seu nome completo"
+                                    class="input input-bordered input-secondary w-full"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-medium">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        Email
+                                    </span>
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="cadastroEmail"
+                                    placeholder="seu@email.com"
+                                    class="input input-bordered input-secondary w-full"
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-medium">
+                                        <i class="fas fa-lock mr-2"></i>
+                                        Senha
+                                    </span>
+                                </label>
+                                <input 
+                                    type="password" 
+                                    id="cadastroSenha"
+                                    placeholder="sejapro"
+                                    class="input input-bordered input-secondary w-full"
+                                    value="sejapro"
+                                    readonly
+                                />
+                                <label class="label">
+                                    <span class="label-text-alt text-info">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        A senha é fixa: <strong>sejapro</strong>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div class="form-control mt-6">
+                                <button type="submit" id="btnCadastro" class="btn btn-secondary btn-block">
+                                    <i class="fas fa-user-plus mr-2"></i>
+                                    Cadastrar
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="divider">OU</div>
+
+                        <div class="text-center">
+                            <button id="btnMostrarLogin" class="btn btn-ghost btn-sm">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Já tem conta? Faça login
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8 text-gray-600">
+                <p class="text-sm">
+                    <i class="fas fa-lock mr-1"></i>
+                    Sistema seguro de turismo inteligente
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">
+                <i class="fas fa-spinner fa-spin text-primary"></i>
+                Processando...
+            </h3>
+            <p id="loadingText">Realizando login...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4 text-success">
+                <i class="fas fa-check-circle"></i>
+                Sucesso!
+            </h3>
+            <p id="successText">Login realizado com sucesso!</p>
+            <div class="modal-action">
+                <button id="btnContinuar" class="btn btn-success">
+                    <i class="fas fa-arrow-right mr-2"></i>
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="errorAlert" class="alert alert-error hidden fixed top-4 right-4 w-auto z-50">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorMessage"></span>
+        <button class="btn btn-sm btn-ghost" onclick="fecharErro()">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="assets/js/login.js"></script>
+</body>
+</html>
