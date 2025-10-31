@@ -1,0 +1,28 @@
+<app-default-login
+    title="Entre na sua conta!"
+    primaryBtnText="Logar"
+    secondaryBtnText="Registrar-se"
+    (submit)="submit()"
+    (navigate)="navigate()"
+    [disablePrimaryBtn]="!loginForm.valid"
+>
+    <form [formGroup]="loginForm">
+        <app-primary-input
+            formControlName="username"
+            inputName="username"
+            type="text"
+            label="Username:"
+            placeholder="johndoe"
+        >
+            <img src="user.svg" alt="email"/>
+        </app-primary-input>
+        <app-primary-input
+            formControlName="password"
+            inputName="password"
+            type="password"
+            label="Digite sua senha"
+        >
+            <img src="key.svg" alt="email"/>
+        </app-primary-input>
+    </form>
+</app-default-login>
