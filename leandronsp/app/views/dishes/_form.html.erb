@@ -1,0 +1,85 @@
+<%= form_with(model: dish, class: "space-y-4") do |form| %>
+  <% if dish.errors.any? %>
+    <div class="alert alert-error">
+      <div>
+        <span class="font-bold"><%= pluralize(dish.errors.count, "erro") %> impediram o salvamento:</span>
+        <ul class="list-disc list-inside mt-2">
+          <% dish.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-control w-full">
+    <%= form.label :image, "Foto do Prato *", class: "label" %>
+    <div class="border-2 border-dashed border-base-300 rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer" id="upload-area">
+      <%= form.file_field :image,
+          id: "dish_image",
+          accept: "image/png,image/jpeg,image/jpg,image/webp",
+          class: "hidden",
+          direct_upload: true %>
+      <label for="dish_image" class="cursor-pointer">
+        <div id="upload-placeholder" class="<%= 'hidden' if dish.image.attached? %>">
+          <div class="text-6xl mb-4">📸</div>
+          <p class="text-lg font-semibold mb-2">Clique para fazer upload</p>
+          <p class="text-sm text-base-content/60">PNG, JPG ou WEBP (máx. 5MB)</p>
+        </div>
+        <div id="image-preview" class="<%= 'hidden' unless dish.image.attached? %>">
+          <% if dish.image.attached? %>
+            <%= image_tag dish.image, class: "max-h-64 mx-auto rounded-lg" %>
+          <% end %>
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :name, "Nome do Prato (opcional)", class: "label" %>
+    <%= form.text_field :name,
+        class: "input input-bordered w-full",
+        placeholder: "Ex: Feijoada completa" %>
+    <label class="label">
+      <span class="label-text-alt">Deixe em branco para gerar automaticamente</span>
+    </label>
+  </div>
+
+  <div class="form-control w-full">
+    <%= form.label :user_notes, "Notas Pessoais (opcional)", class: "label" %>
+    <%= form.text_area :user_notes,
+        rows: 3,
+        class: "textarea textarea-bordered w-full",
+        placeholder: "Adicione observações sobre o prato..." %>
+  </div>
+
+  <div class="flex gap-2 pt-4">
+    <%= form.submit dish.new_record? ? "Criar Prato" : "Salvar Alterações",
+        class: "btn btn-primary flex-1" %>
+    <%= link_to "Cancelar", dish.new_record? ? dishes_path : dish_path(dish),
+        class: "btn btn-ghost" %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener('turbo:load', () => {
+    const input = document.getElementById('dish_image');
+    const preview = document.getElementById('image-preview');
+    const placeholder = document.getElementById('upload-placeholder');
+
+    if (input) {
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            preview.innerHTML = `<img src="${e.target.result}" class="max-h-64 mx-auto rounded-lg">`;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+  });
+</script>

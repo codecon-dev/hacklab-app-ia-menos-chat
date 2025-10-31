@@ -1,0 +1,53 @@
+<% content_for :title, t('devise.sessions.new.title', default: 'Login') %>
+
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col">
+    <div class="text-center mb-4">
+      <h1 class="text-5xl font-bold">🍽️ Macedo</h1>
+      <p class="py-6"><%= t('devise.sessions.new.subtitle', default: 'Login to manage your dishes') %></p>
+    </div>
+
+    <div class="card w-[600px] shadow-2xl bg-base-100">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4"><%= t('devise.sessions.new.sign_in', default: 'Sign in') %></h2>
+
+        <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text"><%= t('activerecord.attributes.user.email', default: 'Email') %></span>
+            </label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered", placeholder: t('devise.sessions.new.email_placeholder', default: 'your@email.com') %>
+          </div>
+
+          <div class="form-control mt-4">
+            <label class="label">
+              <span class="label-text"><%= t('activerecord.attributes.user.password', default: 'Password') %></span>
+            </label>
+            <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered", placeholder: "••••••••" %>
+          </div>
+
+          <% if devise_mapping.rememberable? %>
+            <div class="form-control mt-4">
+              <label class="label cursor-pointer justify-start gap-2">
+                <%= f.check_box :remember_me, class: "checkbox checkbox-primary" %>
+                <span class="label-text"><%= t('devise.sessions.new.remember_me', default: 'Remember me') %></span>
+              </label>
+            </div>
+          <% end %>
+
+          <div class="form-control mt-6">
+            <%= f.submit t('devise.sessions.new.submit', default: 'Sign in'), class: "btn btn-primary w-full" %>
+          </div>
+        <% end %>
+
+        <div class="divider"><%= t('common.or', default: 'OR') %></div>
+
+        <div class="text-center space-y-2">
+          <%= link_to t('devise.shared.links.sign_up', default: 'Sign up'), new_registration_path(resource_name), class: "btn btn-ghost btn-sm" %>
+          <br>
+          <%= link_to t('devise.shared.links.forgot_password', default: 'Forgot your password?'), new_password_path(resource_name), class: "link link-primary text-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

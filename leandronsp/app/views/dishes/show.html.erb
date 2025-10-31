@@ -1,0 +1,93 @@
+<% content_for :title, @dish.name || "Prato" %>
+
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <%= link_to "← Voltar", dishes_path, class: "btn btn-ghost" %>
+    <div class="flex gap-2">
+      <%= button_to toggle_favorite_dish_path(@dish), method: :post, class: "btn btn-circle btn-outline #{@dish.favorite ? 'btn-warning' : ''}" do %>
+        <span class="text-2xl"><%= @dish.favorite ? '⭐' : '☆' %></span>
+      <% end %>
+      <%= link_to "Editar", edit_dish_path(@dish), class: "btn btn-secondary" %>
+      <%= button_to "Excluir", dish_path(@dish), method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } }, class: "btn btn-error" %>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow-xl">
+    <figure class="max-h-96">
+      <% if @dish.image.attached? %>
+        <%= image_tag @dish.image, class: "w-full h-full object-contain", alt: @dish.name || "Prato" %>
+      <% else %>
+        <div class="w-full h-64 bg-base-300 flex items-center justify-center">
+          <span class="text-9xl">🍽️</span>
+        </div>
+      <% end %>
+    </figure>
+
+    <div class="card-body">
+      <div class="flex justify-between items-start gap-2">
+        <h1 class="card-title text-3xl flex-1 line-clamp-2">
+          <%= @dish.name.presence || "Prato sem nome" %>
+        </h1>
+        <% if @dish.dish_type.present? %>
+          <div class="badge badge-lg badge-primary truncate max-w-[200px] flex-shrink-0" title="<%= @dish.dish_type %>"><%= @dish.dish_type %></div>
+        <% end %>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="space-y-4">
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Descrição</h2>
+          <p class="text-base-content/80">
+            <%= @dish.description || "Sem descrição" %>
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <h2 class="text-xl font-semibold mb-4">Sugestões de Harmonização</h2>
+          <% if @dish.pairing_suggestions.present? %>
+            <div class="grid gap-4">
+              <% @dish.pairing_suggestions.each do |suggestion| %>
+                <div class="card bg-base-200 <%= suggestion['is_easter_egg'] ? 'border-2 border-warning' : '' %>">
+                  <div class="card-body p-4">
+                    <h3 class="font-semibold flex items-center gap-2 flex-wrap">
+                      <span class="line-clamp-1"><%= suggestion['name'] %></span>
+                      <% if suggestion['is_easter_egg'] %>
+                        <span class="badge badge-warning badge-sm flex-shrink-0">🇧🇷</span>
+                      <% end %>
+                    </h3>
+                    <p class="text-sm text-base-content/70"><%= suggestion['description'] %></p>
+                    <div class="badge badge-outline badge-sm truncate max-w-[150px]" title="<%= suggestion['type']&.titleize || 'Sugestão' %>"><%= suggestion['type']&.titleize || 'Sugestão' %></div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="alert alert-info">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Nenhuma sugestão de harmonização disponível ainda.</span>
+            </div>
+          <% end %>
+        </div>
+
+        <% if @dish.user_notes.present? %>
+          <div class="divider"></div>
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Minhas Notas</h2>
+            <div class="p-4 bg-base-200 rounded-lg">
+              <p class="text-base-content/80"><%= @dish.user_notes %></p>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-sm text-base-content/50 mt-4 text-center">
+    Criado em <%= l(@dish.created_at, format: :long) %>
+  </div>
+</div>

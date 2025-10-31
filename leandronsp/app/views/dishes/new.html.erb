@@ -1,0 +1,14 @@
+<% content_for :title, "Novo Prato" %>
+
+<div class="max-w-2xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Adicionar Novo Prato</h1>
+    <%= link_to "← Voltar", dishes_path, class: "btn btn-ghost" %>
+  </div>
+
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <%= render "form", dish: @dish %>
+    </div>
+  </div>
+</div>

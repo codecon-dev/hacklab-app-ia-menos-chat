@@ -1,0 +1,132 @@
+<% content_for :title, "Macedo - Meus Pratos" %>
+
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-3xl font-bold">Meus Pratos</h1>
+
+  <%= form_with url: dishes_path, method: :get, class: "flex gap-2", data: { turbo_frame: "_top" } do |f| %>
+    <div class="form-control">
+      <%= f.text_field :search,
+          value: params[:search],
+          placeholder: "Buscar pratos, ingredientes, bebidas...",
+          class: "input input-bordered w-80",
+          autofocus: params[:search].present? %>
+
+      <% if params[:search].present? %>
+        <label class="label py-1">
+          <span class="label-text-alt">
+            Buscando: "<span class="font-semibold"><%= params[:search] %></span>"
+          </span>
+          <%= link_to dishes_path, class: "label-text-alt link link-hover" do %>
+            ✕ Limpar
+          <% end %>
+        </label>
+      <% end %>
+    </div>
+
+    <%= f.submit "🔍 Buscar", class: "btn btn-primary" %>
+
+    <% if params[:favorites].present? %>
+      <%= link_to "Ver Todos", dishes_path, class: "btn btn-outline" %>
+    <% else %>
+      <%= link_to "⭐ Favoritos", dishes_path(favorites: true), class: "btn btn-outline" %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if current_user.eating_profile.present? %>
+  <div class="alert alert-info shadow-lg mb-6">
+    <div class="flex items-center gap-3 w-full">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <div class="flex-1">
+        <h3 class="font-bold">Seu Perfil Gastronômico</h3>
+        <div class="text-sm mt-1 italic">
+          "<%= current_user.eating_profile %>"
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @dishes.empty? && params[:search].present? %>
+  <div class="alert shadow-lg mb-6">
+    <div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <div>
+        <h3 class="font-bold">Nenhum prato encontrado</h3>
+        <div class="text-xs">
+          Sua busca por "<%= params[:search] %>" não encontrou resultados.
+          <%= link_to "Ver todos os pratos", dishes_path, class: "link link-hover" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-200 shadow-sm">
+    <div class="card-body py-4">
+      <h4 class="font-semibold text-sm mb-2">💡 Dicas de busca:</h4>
+      <ul class="text-xs space-y-1 opacity-70">
+        <li>• Use aspas para frases exatas: <code class="bg-base-300 px-1 rounded">"molho de tomate"</code></li>
+        <li>• Use * para prefixos: <code class="bg-base-300 px-1 rounded">marg*</code> encontra "margherita"</li>
+        <li>• Combine termos com AND: <code class="bg-base-300 px-1 rounded">pizza AND queijo</code></li>
+        <li>• Busque em bebidas: <code class="bg-base-300 px-1 rounded">vinho</code> ou <code class="bg-base-300 px-1 rounded">caipirinha</code></li>
+      </ul>
+    </div>
+  </div>
+
+<% elsif @dishes.empty? %>
+  <div class="hero min-h-[400px] bg-base-100 rounded-lg">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h2 class="text-2xl font-bold mb-4">Nenhum prato ainda!</h2>
+        <p class="mb-6">Faça o upload da foto de um prato delicioso para começar.</p>
+        <%= link_to "Adicionar Primeiro Prato", new_dish_path, class: "btn btn-primary btn-lg" %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @dishes.each do |dish| %>
+      <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
+        <%= link_to dish_path(dish) do %>
+          <figure class="h-64 overflow-hidden">
+            <% if dish.image.attached? %>
+              <%= image_tag dish.image, class: "w-full h-full object-cover", alt: dish.name || "Prato" %>
+            <% else %>
+              <div class="w-full h-full bg-base-300 flex items-center justify-center">
+                <span class="text-6xl">🍽️</span>
+              </div>
+            <% end %>
+          </figure>
+        <% end %>
+
+        <div class="card-body">
+          <div class="flex justify-between items-start gap-2">
+            <h2 class="card-title flex-1 line-clamp-2">
+              <%= link_to dish.name.presence || "Prato sem nome", dish_path(dish), class: "hover:text-primary" %>
+            </h2>
+            <% if dish.favorite %>
+              <span class="text-2xl flex-shrink-0">⭐</span>
+            <% end %>
+          </div>
+
+          <p class="text-sm text-base-content/70 line-clamp-2">
+            <%= dish.description&.truncate(80) || "Sem descrição" %>
+          </p>
+
+          <div class="card-actions justify-between items-center mt-2">
+            <% if dish.dish_type.present? %>
+              <div class="badge badge-outline truncate max-w-[150px]" title="<%= dish.dish_type %>">
+                <%= dish.dish_type %>
+              </div>
+            <% end %>
+            <%= link_to "Ver Detalhes", dish_path(dish), class: "btn btn-sm btn-primary flex-shrink-0" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
