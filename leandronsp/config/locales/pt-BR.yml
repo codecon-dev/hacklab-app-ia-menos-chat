@@ -1,0 +1,151 @@
+pt-BR:
+  hello: "Olá mundo"
+
+  # Common
+  common:
+    or: "OU"
+
+  # Application specific translations
+  app:
+    name: "Macedo"
+    tagline: "Gerencie seus pratos com inteligência artificial"
+
+  # Navigation
+  nav:
+    my_dishes: "Meus Pratos"
+    new_dish: "Novo Prato"
+    login: "Entrar"
+    signup: "Cadastrar"
+    logout: "Sair"
+
+  # ActiveRecord attributes
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmar senha"
+
+  # Devise
+  devise:
+    sessions:
+      new:
+        title: "Login"
+        subtitle: "Entre para gerenciar seus pratos"
+        sign_in: "Login"
+        email_placeholder: "seu@email.com"
+        remember_me: "Lembrar de mim"
+        submit: "Entrar"
+
+    registrations:
+      new:
+        title: "Cadastro"
+        subtitle: "Crie sua conta e comece a gerenciar seus pratos"
+        sign_up: "Cadastro"
+        email_placeholder: "seu@email.com"
+        minimum_password_length: "%{count} caracteres mín."
+        submit: "Criar conta"
+
+    passwords:
+      new:
+        title: "Recuperar Senha"
+        subtitle: "Recupere sua senha"
+        header: "Esqueci minha senha"
+        email_placeholder: "seu@email.com"
+        instructions: "Enviaremos instruções para resetar sua senha"
+        submit: "Enviar instruções"
+
+    shared:
+      links:
+        sign_in: "Já tenho conta"
+        sign_up: "Criar conta"
+        forgot_password: "Esqueci minha senha"
+        back_to_login: "Voltar ao login"
+
+  # Home page
+  home:
+    title: "Bem-vindo"
+    hero:
+      tagline: "Seu catálogo pessoal de pratos e harmonizações"
+      description: "Organize seus pratos favoritos, descubra harmonizações perfeitas com a ajuda de IA, e mantenha tudo em um só lugar."
+      cta_signup: "Criar Conta"
+      cta_login: "Entrar"
+    features:
+      title: "Recursos"
+      upload:
+        title: "Upload de Imagens"
+        description: "Faça upload de fotos dos seus pratos favoritos"
+      ai:
+        title: "Análise com IA"
+        description: "Descrições e sugestões de harmonização geradas automaticamente"
+      favorites:
+        title: "Favoritos"
+        description: "Marque e organize seus pratos preferidos"
+
+  # Dishes
+  dishes:
+    index:
+      title: "Meus Pratos"
+      search_placeholder: "Buscar pratos, ingredientes, bebidas..."
+      search_button: "🔍 Buscar"
+      searching: "Buscando:"
+      clear: "✕ Limpar"
+      favorites: "⭐ Favoritos"
+      all: "Ver Todos"
+      no_results:
+        title: "Nenhum prato encontrado"
+        message: "Sua busca por \"%{query}\" não encontrou resultados."
+        back: "Ver todos os pratos"
+      search_tips:
+        title: "💡 Dicas de busca:"
+        exact: "Use aspas para frases exatas:"
+        prefix: "Use * para prefixos:"
+        and: "Combine termos com AND:"
+        drinks: "Busque em bebidas:"
+      empty:
+        title: "Nenhum prato ainda!"
+        message: "Faça o upload da foto de um prato delicioso para começar."
+        cta: "Adicionar Primeiro Prato"
+      view_details: "Ver Detalhes"
+      no_name: "Prato sem nome"
+      no_description: "Sem descrição"
+
+    show:
+      edit: "Editar"
+      delete: "Excluir"
+      back: "Voltar"
+      confirm_delete: "Tem certeza que deseja excluir este prato?"
+      suggestion_default: "Sugestão"
+
+    form:
+      name: "Nome"
+      description: "Descrição"
+      dish_type: "Tipo de Prato"
+      ingredients: "Ingredientes"
+      pairing: "Harmonização"
+      favorite: "Favorito"
+      image: "Imagem"
+      save: "Salvar Prato"
+
+    new:
+      title: "Novo Prato"
+
+    edit:
+      title: "Editar Prato"
+
+  # Flash messages
+  flash:
+    dishes:
+      created: "Prato criado com sucesso!"
+      created_analyzing: "Prato criado! Análise em andamento..."
+      updated: "Prato atualizado com sucesso!"
+      destroyed: "Prato excluído com sucesso!"
+      favorite_added: "Favorito adicionado!"
+      favorite_removed: "Favorito removido!"
+
+  # Background jobs and AI
+  ai:
+    placeholder: "Espere um pouco, a AI tá vindo de carroça"
+    analysis_unavailable: "Análise temporariamente indisponível. Tente novamente mais tarde."
+    analyzing: "Análise em andamento..."
+    reload: "Recarregar"

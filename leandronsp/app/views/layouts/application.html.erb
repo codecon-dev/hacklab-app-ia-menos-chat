@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Macedo" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Tailwind CSS (required for DaisyUI) %>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <%# DaisyUI %>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-base-200">
+    <div class="min-h-screen">
+      <nav class="navbar bg-base-100 shadow-lg mb-4">
+        <div class="flex-1">
+          <%= link_to root_path, class: "btn btn-ghost text-xl" do %>
+            🍽️ Macedo
+          <% end %>
+        </div>
+        <div class="flex-none gap-2">
+          <% if user_signed_in? %>
+            <%= link_to t('nav.my_dishes', default: 'My Dishes'), dishes_path, class: "btn btn-ghost" %>
+            <%= link_to t('nav.new_dish', default: 'New Dish'), new_dish_path, class: "btn btn-primary" %>
+            <div class="dropdown dropdown-end">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar placeholder">
+                <div class="bg-neutral text-neutral-content rounded-full w-10">
+                  <span class="text-xl"><%= current_user.email[0].upcase %></span>
+                </div>
+              </div>
+              <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <li class="menu-title"><%= current_user.email %></li>
+                <li><%= button_to t('nav.logout', default: 'Logout'), destroy_user_session_path, method: :delete, class: "text-error" %></li>
+              </ul>
+            </div>
+          <% else %>
+            <%= link_to t('nav.login', default: 'Login'), new_user_session_path, class: "btn btn-ghost" %>
+            <%= link_to t('nav.signup', default: 'Sign Up'), new_user_registration_path, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </nav>
+
+      <main class="container mx-auto px-4">
+        <% if notice.present? %>
+          <div class="alert alert-success mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span><%= notice %></span>
+          </div>
+        <% end %>
+
+        <% if alert.present? %>
+          <div class="alert alert-warning mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span><%= alert %></span>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

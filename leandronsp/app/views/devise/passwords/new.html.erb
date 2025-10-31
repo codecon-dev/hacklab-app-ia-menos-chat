@@ -1,0 +1,40 @@
+<% content_for :title, t('devise.passwords.new.title', default: 'Forgot your password?') %>
+
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col">
+    <div class="text-center mb-4">
+      <h1 class="text-5xl font-bold">🍽️ Macedo</h1>
+      <p class="py-6"><%= t('devise.passwords.new.subtitle', default: 'Recover your password') %></p>
+    </div>
+
+    <div class="card w-[600px] shadow-2xl bg-base-100">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4"><%= t('devise.passwords.new.header', default: 'Forgot your password?') %></h2>
+
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text"><%= t('activerecord.attributes.user.email', default: 'Email') %></span>
+            </label>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input input-bordered", placeholder: t('devise.passwords.new.email_placeholder', default: 'your@email.com') %>
+            <label class="label">
+              <span class="label-text-alt"><%= t('devise.passwords.new.instructions', default: 'We will send you password reset instructions') %></span>
+            </label>
+          </div>
+
+          <div class="form-control mt-6">
+            <%= f.submit t('devise.passwords.new.submit', default: 'Send instructions'), class: "btn btn-primary w-full" %>
+          </div>
+        <% end %>
+
+        <div class="divider"><%= t('common.or', default: 'OR') %></div>
+
+        <div class="text-center">
+          <%= link_to t('devise.shared.links.back_to_login', default: 'Back to login'), new_session_path(resource_name), class: "btn btn-ghost btn-sm" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

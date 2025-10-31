@@ -1,0 +1,180 @@
+# Files in the config/locales directory are used for internationalization and
+# are automatically loaded by Rails. If you want to use locales other than
+# English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more about the API, please read the Rails Internationalization guide
+# at https://guides.rubyonrails.org/i18n.html.
+#
+# Be aware that YAML interprets the following case-insensitive strings as
+# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
+# must be quoted to be interpreted as strings. For example:
+#
+#     en:
+#       "yes": yup
+#       enabled: "ON"
+
+en:
+  hello: "Hello world"
+
+  # Common
+  common:
+    or: "OR"
+
+  # Application specific translations
+  app:
+    name: "Macedo"
+    tagline: "Manage your dishes with artificial intelligence"
+
+  # Navigation
+  nav:
+    my_dishes: "My Dishes"
+    new_dish: "New Dish"
+    login: "Login"
+    signup: "Sign Up"
+    logout: "Logout"
+
+  # ActiveRecord attributes
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Confirm password"
+
+  # Devise
+  devise:
+    sessions:
+      new:
+        title: "Login"
+        subtitle: "Login to manage your dishes"
+        sign_in: "Sign in"
+        email_placeholder: "your@email.com"
+        remember_me: "Remember me"
+        submit: "Sign in"
+
+    registrations:
+      new:
+        title: "Sign up"
+        subtitle: "Create your account and start managing your dishes"
+        sign_up: "Sign up"
+        email_placeholder: "your@email.com"
+        minimum_password_length: "%{count} characters minimum"
+        submit: "Sign up"
+
+    passwords:
+      new:
+        title: "Forgot your password?"
+        subtitle: "Recover your password"
+        header: "Forgot your password?"
+        email_placeholder: "your@email.com"
+        instructions: "We will send you password reset instructions"
+        submit: "Send instructions"
+
+    shared:
+      links:
+        sign_in: "Already have an account"
+        sign_up: "Sign up"
+        forgot_password: "Forgot your password?"
+        back_to_login: "Back to login"
+
+  # Home page
+  home:
+    title: "Welcome"
+    hero:
+      tagline: "Your personal catalog of dishes and pairings"
+      description: "Organize your favorite dishes, discover perfect pairings with AI assistance, and keep everything in one place."
+      cta_signup: "Create Account"
+      cta_login: "Sign In"
+    features:
+      title: "Features"
+      upload:
+        title: "Image Upload"
+        description: "Upload photos of your favorite dishes"
+      ai:
+        title: "AI Analysis"
+        description: "Automatically generated descriptions and pairing suggestions"
+      favorites:
+        title: "Favorites"
+        description: "Mark and organize your favorite dishes"
+
+  # Dishes
+  dishes:
+    index:
+      title: "My Dishes"
+      search_placeholder: "Search dishes, ingredients, drinks..."
+      search_button: "🔍 Search"
+      searching: "Searching for:"
+      clear: "✕ Clear"
+      favorites: "⭐ Favorites"
+      all: "View All"
+      no_results:
+        title: "No dishes found"
+        message: "Your search for \"%{query}\" returned no results."
+        back: "View all dishes"
+      search_tips:
+        title: "💡 Search tips:"
+        exact: "Use quotes for exact phrases:"
+        prefix: "Use * for prefixes:"
+        and: "Combine terms with AND:"
+        drinks: "Search in drinks:"
+      empty:
+        title: "No dishes yet!"
+        message: "Upload a photo of a delicious dish to get started."
+        cta: "Add First Dish"
+      view_details: "View Details"
+      no_name: "Unnamed dish"
+      no_description: "No description"
+
+    show:
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back"
+      confirm_delete: "Are you sure you want to delete this dish?"
+      suggestion_default: "Suggestion"
+
+    form:
+      name: "Name"
+      description: "Description"
+      dish_type: "Dish Type"
+      ingredients: "Ingredients"
+      pairing: "Pairing"
+      favorite: "Favorite"
+      image: "Image"
+      save: "Save Dish"
+
+    new:
+      title: "New Dish"
+
+    edit:
+      title: "Edit Dish"
+
+  # Flash messages
+  flash:
+    dishes:
+      created: "Dish created successfully!"
+      created_analyzing: "Dish created! Analysis in progress..."
+      updated: "Dish updated successfully!"
+      destroyed: "Dish deleted successfully!"
+      favorite_added: "Favorite added!"
+      favorite_removed: "Favorite removed!"
+
+  # Background jobs and AI
+  ai:
+    placeholder: "Hold on, AI is coming by cart"
+    analysis_unavailable: "Analysis temporarily unavailable. Please try again later."
+    analyzing: "Analysis in progress..."
+    reload: "Reload"

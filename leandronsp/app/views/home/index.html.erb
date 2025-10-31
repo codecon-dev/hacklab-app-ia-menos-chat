@@ -1,0 +1,48 @@
+<% content_for :title, t('home.title', default: 'Welcome') %>
+
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content text-center">
+    <div class="max-w-md">
+      <h1 class="text-6xl font-bold mb-4">🍽️ Macedo</h1>
+      <p class="text-2xl mb-8"><%= t('home.hero.tagline', default: 'Your personal catalog of dishes and pairings') %></p>
+      <p class="py-6">
+        <%= t('home.hero.description', default: 'Organize your favorite dishes, discover perfect pairings with AI assistance, and keep everything in one place.') %>
+      </p>
+      <div class="flex gap-4 justify-center">
+        <%= link_to t('home.hero.cta_signup', default: 'Create Account'), new_user_registration_path, class: "btn btn-primary btn-lg" %>
+        <%= link_to t('home.hero.cta_login', default: 'Sign In'), new_user_session_path, class: "btn btn-outline btn-lg" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-base-100 py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-12"><%= t('home.features.title', default: 'Features') %></h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body items-center text-center">
+          <div class="text-5xl mb-4">📸</div>
+          <h3 class="card-title"><%= t('home.features.upload.title', default: 'Image Upload') %></h3>
+          <p><%= t('home.features.upload.description', default: 'Upload photos of your favorite dishes') %></p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body items-center text-center">
+          <div class="text-5xl mb-4">🤖</div>
+          <h3 class="card-title"><%= t('home.features.ai.title', default: 'AI Analysis') %></h3>
+          <p><%= t('home.features.ai.description', default: 'Automatically generated descriptions and pairing suggestions') %></p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body items-center text-center">
+          <div class="text-5xl mb-4">⭐</div>
+          <h3 class="card-title"><%= t('home.features.favorites.title', default: 'Favorites') %></h3>
+          <p><%= t('home.features.favorites.description', default: 'Mark and organize your favorite dishes') %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
