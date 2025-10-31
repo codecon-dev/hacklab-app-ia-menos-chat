@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="input-side">
+    <h2>Entrada</h2>
+    <textarea [(ngModel)]="message" placeholder="Digite seu texto..." rows="8"></textarea>
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+
+  <div class="output-side">
+    <h2>Resultado</h2>
+    <div class="result-box">{{ result }}</div>
+    <h2>Mensagem antiga</h2>
+    <div class="result-box">{{ oldMessage }}</div>
+  </div>
+</div>
